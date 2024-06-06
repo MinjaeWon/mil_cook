@@ -333,11 +333,11 @@ elif selected_menu == "메뉴 영양소 AI분석":
         st.markdown(horizontal_bar, True)
         st.write("**조식, 중식, 석식 메뉴**를 각각 입력하세요 (콤마로 구분):")
         breakfast_input = st.text_input("✔ 조식 메뉴 👇")
-        breakfast_input
+        
         lunch_input = st.text_input("✔ 중식 메뉴 👇")
-        lunch_input
+        
         dinner_input = st.text_input("✔ 석식 메뉴 👇")
-        dinner_input
+        
         analyze_button = st.button("분석")
 
         # 모든 입력된 메뉴를 통합하여 분석에 사용
@@ -355,7 +355,7 @@ elif selected_menu == "메뉴 영양소 AI분석":
             else:
                 analysis_result = "❇ 메뉴 입력 및 분석 버튼 클릭 후, 결과가 출력됩니다."
 
-            st.text_area("😍 영양소 분석 결과", value=analysis_result, height=400)
+            st.text_area("😍 영양소 분석 결과", value=analysis_result+'입력메뉴:'+'조식:'+breakfast_input+'중식:'+lunch_input+'석식:'+dinner_input, height=400)
 
     # col2에 필수 영양소 7가지를 시각화 및 상태표 표시
     with col2:
