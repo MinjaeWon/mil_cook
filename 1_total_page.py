@@ -11,7 +11,7 @@ from PIL import Image
 from PIL import Image
 from streamlit_option_menu import option_menu
 #from langchain.memory import StreamlitChatMessageHistory
-from langchain.callbacks import get_openai_callback
+#from langchain.callbacks import get_openai_callback
 
 #import hydralit_components as hc
 
@@ -503,8 +503,8 @@ elif selected_menu == "음식 AI챗봇":
 
                 with st.spinner("잠시만 기다려주세요..."):
                     result = chain({"question": query})
-                    with get_openai_callback() as cb:
-                        st.session_state.chat_history = result['chat_history']
+                    # with get_openai_callback() as cb:
+                    #     st.session_state.chat_history = result['chat_history']
                     response = result['answer']
                     #빅source_documents = result['source_documents']
 
