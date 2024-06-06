@@ -10,4 +10,3 @@ langchain
 tiktoken
 loguru
 qrcode
-StreamlitChatMessageHistory

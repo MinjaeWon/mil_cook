@@ -10,7 +10,7 @@ from PIL import Image
 
 from PIL import Image
 from streamlit_option_menu import option_menu
-from langchain.memory import StreamlitChatMessageHistory
+#from langchain.memory import StreamlitChatMessageHistory
 from langchain.callbacks import get_openai_callback
 
 #import hydralit_components as hc
@@ -488,9 +488,10 @@ elif selected_menu == "음식 AI챗봇":
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-    history = StreamlitChatMessageHistory(key="chat_messages")
+    
+    # history = StreamlitChatMessageHistory(key="chat_messages")
 
-        # Chat logic
+    # Chat logic
     if query := st.chat_input("질문(재료 및 영양소)을 입력해주세요."):
           st.session_state.messages.append({"role": "user", "content": query})
 
