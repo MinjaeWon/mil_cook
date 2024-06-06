@@ -31,7 +31,7 @@ def download_and_save_image(image_url, text, font_size):
     image = Image.open(io.BytesIO(response.content))
     draw = ImageDraw.Draw(image)
     # font = ImageFont.truetype("fonts/gulim.ttc", font_size)
-    font = ImageFont.truetype("/gulim.ttc", font_size)
+    font = ImageFont.truetype("gulim.ttc", font_size)
 
     # 텍스트의 경계 상자 계산 및 위치 조정
     text_bbox = draw.textbbox((0, 0), text, font=font)
