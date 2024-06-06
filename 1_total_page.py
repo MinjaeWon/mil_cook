@@ -333,11 +333,11 @@ elif selected_menu == "메뉴 영양소 AI분석":
         st.markdown(horizontal_bar, True)
         st.write("**조식, 중식, 석식 메뉴**를 각각 입력하세요 (콤마로 구분):")
         breakfast_input = st.text_input("✔ 조식 메뉴 👇")
-        st.write("**조식:", breakfast_input)
+        breakfast_input
         lunch_input = st.text_input("✔ 중식 메뉴 👇")
-        st.write("**조식:", lunch_input)
+        lunch_input
         dinner_input = st.text_input("✔ 석식 메뉴 👇")
-        st.write("**조식:", dinner_input)
+        dinner_input
         analyze_button = st.button("분석")
 
         # 모든 입력된 메뉴를 통합하여 분석에 사용
