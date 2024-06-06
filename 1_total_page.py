@@ -24,6 +24,7 @@ with st.sidebar:
     selected_menu = option_menu("주요 서비스", ["Home", '제공 식단 분석', '메뉴 영양소 AI분석', 'AI 식단 작성', '음식 AI챗봇', '급식포털'], 
         icons=['house', 'postcard-heart','tropical-storm','window','symmetry-horizontal'], menu_icon="cast", default_index=0)
     st.markdown(horizontal_bar, True)
+    author_dtl = "<strong> @ 대한민국 군인 화이팅!! </strong>"
 
 # InitialPage 함수 정의
 def InitialPage():
@@ -409,7 +410,7 @@ elif selected_menu == "AI 식단 작성":
     # 월 선택 (월간 선택 시에만 활성화)
     selected_month = None
     if menu_duration == '월간':
-        selected_month = st.selectbox('✔ 월을 선택하세요', [f'{i:02d}' for i in range(1, 13)])
+        selected_month = st.selectbox('✔ 월을 선택하세요.(계절 고려 식단 작성)', [f'{i:02d}' for i in range(1, 13)])
 
     # Streamlit 앱 설정 부분에서 식단표를 표시하는 방법 수정
     if menu_duration == '주간':
@@ -442,8 +443,8 @@ elif selected_menu == "AI 식단 작성":
 elif selected_menu == "음식 AI챗봇":
     import menu4
 
-    st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🧑‍💻 챗봇</h1>", unsafe_allow_html=True)
-    with st.expander("**📖 지능형 AI챗봇 사용법**"):
+    st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🧑‍💻 재료 및 영양소 전문 AI챗봇</h1>", unsafe_allow_html=True)
+    with st.expander("**📖 (필독) 지능형 AI챗봇 사용법**"):
             st.markdown("""
             <div style="font-size:18px; font-weight:bold; color:#4CAF50;">
             chatGPT와 같은 대화형 AI챗봇
