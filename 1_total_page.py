@@ -28,7 +28,7 @@ with st.sidebar:
     """
     <style>
     .small-font {
-        font-size:25px !important;
+        font-size:17px !important;
     }
     </style>
     <p class="small-font">@ 대한민국 군인 화이팅</p>
