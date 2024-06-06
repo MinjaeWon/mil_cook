@@ -12,3 +12,5 @@ loguru
 qrcode
 langchain-community
 pypdf
+hydralit_components
+openpyxl
