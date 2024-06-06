@@ -1,6 +1,12 @@
 streamlit
-streamlit_option_menu
-streamlit-scrollable-textbox
-openai
-time
+openai==0.28.0
+sentence-transformers
 pandas
+altair
+plotly
+Pillow
+streamlit-option-menu
+langchain
+tiktoken
+loguru
+qrcode
