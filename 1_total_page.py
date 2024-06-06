@@ -333,8 +333,11 @@ elif selected_menu == "메뉴 영양소 AI분석":
         st.markdown(horizontal_bar, True)
         st.write("**조식, 중식, 석식 메뉴**를 각각 입력하세요 (콤마로 구분):")
         breakfast_input = st.text_input("✔ 조식 메뉴 👇")
+        st.write("**조식:", {breakfast_input})
         lunch_input = st.text_input("✔ 중식 메뉴 👇")
+        st.write("**조식:", {lunch_input})
         dinner_input = st.text_input("✔ 석식 메뉴 👇")
+        st.write("**조식:", {dinner_input})
         analyze_button = st.button("분석")
 
         # 모든 입력된 메뉴를 통합하여 분석에 사용
@@ -561,21 +564,22 @@ elif selected_menu == "급식포털":
             submit_button = st.button("이미지 생성")
 
         if submit_button:
-            with col2:
-                st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🆗 군급식 홍보 이미지 생성 완료</h1>", unsafe_allow_html=True)
-                # 이미지 생성 및 URL 출력
-                image_url = menu5.create_prevention_image(prompt, size)
-                # 이미지 다운로드 및 메모리에 저장
-                image_byte_io = menu5.download_and_save_image(image_url, text_to_add, font_size)
-                # 원본 이미지 표시
-                st.image(image_url, caption="원본 이미지!")
-                # 텍스트가 추가된 이미지 표시
-                st.image(image_byte_io, caption="문구가 들어간 이미지")
-                # # 이미지 다운로드 링크 제공
-                # st.download_button(label="이미지 다운로드",
-                #                 data=image_byte_io.getvalue(),
-                #                 file_name="final_image.jpg",
-                #                 mime="image/jpeg")
+            with st.spinner('🔍 입력 조건 반영 AI이미지 생성 중...'):
+                with col2:
+                    st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🆗 군급식 홍보 이미지</h1>", unsafe_allow_html=True)
+                    # 이미지 생성 및 URL 출력
+                    image_url = menu5.create_prevention_image(prompt, size)
+                    # 이미지 다운로드 및 메모리에 저장
+                    image_byte_io = menu5.download_and_save_image(image_url, text_to_add, font_size)
+                    # 원본 이미지 표시
+                    st.image(image_url, caption="원본 이미지!")
+                    # 텍스트가 추가된 이미지 표시
+                    st.image(image_byte_io, caption="문구가 들어간 이미지")
+                    # # 이미지 다운로드 링크 제공
+                    # st.download_button(label="이미지 다운로드",
+                    #                 data=image_byte_io.getvalue(),
+                    #                 file_name="final_image.jpg",
+                    #                 mime="image/jpeg")
 
 
 
