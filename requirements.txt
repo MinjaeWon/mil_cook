@@ -11,4 +11,4 @@ tiktoken
 loguru
 qrcode
 langchain-community
-PyPDF2
+pypdf
