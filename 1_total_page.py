@@ -25,15 +25,21 @@ with st.sidebar:
         icons=['house', 'postcard-heart','tropical-storm','window','symmetry-horizontal'], menu_icon="cast", default_index=0)
     st.markdown(horizontal_bar, True)
     st.sidebar.markdown(
-    """
-    <style>
-    .small-font {
-        font-size:17px !important;
-    }
-    </style>
-    <p class="small-font">@ 대한민국 군인 화이팅</p>
-    """,
-    unsafe_allow_html=True
+        """
+        <style>
+        .nice-font {
+            font-size:17px;           /* 글자 크기 설정 */
+            font-family: 'Helvetica'; /* 글꼴 설정, 시스템에 따라 변경 가능 */
+            color: #4a4a4a;           /* 글자색 설정, 원하는 색상 코드로 변경 가능 */
+            text-align: center;      	/* 텍스트 중앙 정렬 */
+            padding: 10px;            /* 패딩 설정 */
+            border-radius: 10px;      /* 테두리 둥글게 설정 */
+            background-color: #f0f0f0; /* 배경색 설정 */
+        }
+        </style>
+        <p class="nice-font">대한민국 군인 화이팅</p>
+        """,
+        unsafe_allow_html=True
 )
 
 # InitialPage 함수 정의
