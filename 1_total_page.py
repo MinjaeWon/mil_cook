@@ -355,7 +355,7 @@ elif selected_menu == "메뉴 영양소 AI분석":
             else:
                 analysis_result = "❇ 메뉴 입력 및 분석 버튼 클릭 후, 결과가 출력됩니다."
 
-            st.text_area("😍 영양소 분석 결과", value=analysis_result+'입력메뉴:'+'조식:'+breakfast_input+'중식:'+lunch_input+'석식:'+dinner_input, height=400)
+            st.text_area("😍 영양소 분석 결과", value=analysis_result+'\n입력메뉴:'+'\n조식:'+breakfast_input+'\n중식:'+lunch_input+'\n석식:'+dinner_input, height=400)
 
     # col2에 필수 영양소 7가지를 시각화 및 상태표 표시
     with col2:
