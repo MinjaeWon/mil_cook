@@ -24,7 +24,17 @@ with st.sidebar:
     selected_menu = option_menu("주요 서비스", ["Home", '제공 식단 분석', '메뉴 영양소 AI분석', 'AI 식단 작성', '음식 AI챗봇', '급식포털'], 
         icons=['house', 'postcard-heart','tropical-storm','window','symmetry-horizontal'], menu_icon="cast", default_index=0)
     st.markdown(horizontal_bar, True)
-    author_dtl = "<strong> @ 대한민국 군인 화이팅!! </strong>"
+    st.sidebar.markdown(
+    """
+    <style>
+    .small-font {
+        font-size:10px !important;
+    }
+    </style>
+    <p class="small-font">@ 대한민국 군인 화이팅</p>
+    """,
+    unsafe_allow_html=True
+)
 
 # InitialPage 함수 정의
 def InitialPage():
