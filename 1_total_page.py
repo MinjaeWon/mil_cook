@@ -566,9 +566,9 @@ elif selected_menu == "음식 AI챗봇":
         openai_api_key = ""  # 개인 API 번호
 
         with st.spinner("PDF 임베딩 중... 잠시만 기다려주세요."):
-            files_text = menu4.load_and_split_pdf(local_file_paths)
-            text_chunks = menu4.split_text_into_chunks(files_text)
-            vetorestore = menu4.create_vectorstore(text_chunks)
+            files_text = menu4.get_text(local_file_paths)
+            text_chunks = menu4.get_text_chunks(files_text)
+            vetorestore = menu4.get_vectorstore(text_chunks)
             st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
             st.session_state.processComplete = True
 
