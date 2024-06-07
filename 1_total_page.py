@@ -503,9 +503,17 @@ elif selected_menu == "음식 AI챗봇":
         st.session_state['messages'] = [{"role": "assistant",
                                         "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+    # 메시지를 표시하는 함수
+    def display_messages():
+        for message in st.session_state.messages:
+            role = message["role"]
+            content = message["content"]
+            if role == "assistant":
+                st.markdown(f"**Assistant:** {content}")
+            else:
+                st.markdown(f"**You:** {content}")
+
+    display_messages()
 
     # Chat logic
     if query := st.chat_input("음식 질문(재료 및 영양소)을 입력해주세요."):
