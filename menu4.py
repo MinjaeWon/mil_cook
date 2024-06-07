@@ -1,4 +1,4 @@
-# import streamlit as st
+import streamlit as st
 import tiktoken
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
@@ -27,6 +27,7 @@ def tiktoken_len(text):
     tokens = tokenizer.encode(text)
     return len(tokens)
 
+@st.cache_data
 def get_text(file_paths):
     doc_list = []
     for file_path in file_paths:
@@ -45,6 +46,7 @@ def get_text_chunks(text):
     chunks = text_splitter.split_documents(text)
     return chunks
 
+@st.cache_data
 def get_vectorstore(text_chunks):
     embeddings = HuggingFaceEmbeddings(
         model_name="jhgan/ko-sroberta-multitask",
