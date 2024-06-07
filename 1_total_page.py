@@ -500,37 +500,62 @@ elif selected_menu == "음식 AI챗봇":
             st.session_state.processComplete = True
             
     if 'messages' not in st.session_state:
-        st.session_state['messages'] = [{"role": "assistant",
+        st.session_state['messages'] = [{"role": "✅",
                                         "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
+        
 
-    # 메시지를 표시하는 함수
-    def display_messages():
-        for message in st.session_state.messages:
-            role = message["role"]
-            content = message["content"]
-            if role == "assistant":
-                st.markdown(f"**Assistant:** {content}")
-            else:
-                st.markdown(f"**You:** {content}")
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+          st.markdown(message["content"])
 
-    display_messages()
+    # # 메시지를 표시하는 함수
+    # def display_messages():
+    #     for message in st.session_state.messages:
+    #         role = message["role"]
+    #         content = message["content"]
+    #         if role == "assistant":
+    #             st.markdown(f"**Assistant:** {content}")
+    #         else:
+    #             st.markdown(f"**You:** {content}")
+
+    # display_messages()
+
 
     # Chat logic
-    if query := st.text_input("질문을 입력해주세요."):
+    if query := st.chat_input("질문을 입력해주세요."):
         st.session_state.messages.append({"role": "user", "content": query})
 
-        st.markdown(f"**You:** {query}")
+        with st.chat_message("user"):
+            st.markdown(query)
 
-        with st.spinner("잠시만 기다려주세요..."):
+        with st.chat_message("assistant"):
             chain = st.session_state.conversation
-            result = chain({"question": query})
-            response = result['answer']
-            st.markdown(f"**Assistant:** {response}")
+
+            with st.spinner("잠시만 기다려주세요..."):
+                result = chain({"question": query})
+                response = result['answer']
+                st.markdown(response)
 
         # Add assistant message to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 
+    # # Chat logic
+    # if query := st.text_input("질문(재료 및 영양소)을 입력해주세요."):
+    #     st.session_state.messages.append({"role": "user", "content": query})
+
+    #     st.markdown(f"**You:** {query}")
+
+    #     with st.spinner("AI 분석 중,잠시만 기다려주세요..."):
+    #         chain = st.session_state.conversation
+    #         result = chain({"question": query})
+    #         response = result['answer']
+    #         st.markdown(f"**Assistant:** {response}")
+
+    #     # Add assistant message to chat history
+    #     st.session_state.messages.append({"role": "assistant", "content": response})
+
+#-------------------
 
         # if "conversation" not in st.session_state:
         #     st.session_state.conversation = None
