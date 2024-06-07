@@ -565,7 +565,7 @@ elif selected_menu == "음식 AI챗봇":
         local_file_paths = ['메뉴4_데이터.pdf']  # 챗봇 사전 학습 데이터
         openai_api_key = ""  # 개인 API 번호
 
-        with st.spinner("PDF 임베딩 중... 잠시만 기다려주세요."):
+        with st.spinner("AI 전문 데이터 셋팅 중... 잠시만 기다려주세요."):
             files_text = menu4.get_text(local_file_paths)
             text_chunks = menu4.get_text_chunks(files_text)
             vetorestore = menu4.get_vectorstore(text_chunks)
@@ -574,14 +574,14 @@ elif selected_menu == "음식 AI챗봇":
 
     if 'messages' not in st.session_state:
         st.session_state['messages'] = [{"role": "assistant",
-                                        "content": "안녕하세요! 영주시 관광지 검색 인공지능 챗봇이에요. 궁금한 것을 물어봐 주세요!"}]
+                                        "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
     # Chat logic
-    if query := st.chat_input("질문을 입력해주세요."):
+    if query := st.chat_input("질문(재료 및 영양소)을 입력해주세요. (EX,'콩나물국 영양소 알려줘' 등 )"):
         st.session_state.messages.append({"role": "user", "content": query})
 
         with st.chat_message("user"):
@@ -590,7 +590,7 @@ elif selected_menu == "음식 AI챗봇":
         with st.chat_message("assistant"):
             chain = st.session_state.conversation
 
-            with st.spinner("잠시만 기다려주세요..."):
+            with st.spinner("AI 기반 분석 중 잠시만 기다려주세요..."):
                 result = chain({"question": query})
                 response = result['answer']
                 st.markdown(response)
