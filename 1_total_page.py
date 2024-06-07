@@ -460,7 +460,7 @@ elif selected_menu == "음식 AI챗봇":
     import pickle
 
     st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🧑‍💻 재료 및 영양소 전문 AI챗봇</h1>", unsafe_allow_html=True)
-    with st.expander("**📖 (필독) 지능형 AI챗봇 사용법**"):
+    with st.expander("**📖 (필독) 지능형 AI챗봇 사용법(예시질문 포함)**"):
             st.markdown("""
             <div style="font-size:18px; font-weight:bold; color:#4CAF50;">
             chatGPT와 같은 대화형 AI챗봇
@@ -469,15 +469,17 @@ elif selected_menu == "음식 AI챗봇":
             <ol>
                 <li><b>특징 1 :</b> 사전 전문DB 학습기반 대화형 챗봇(속도, 용량 문제로 제한적 학습)</li>
                 <li><b>특징 2 :</b> 음식 재료(어묵김말이, 고구마그라탕 등) 및 영양소(호박죽, 산채비빔밥 등)에 대한 질문 가능</li>
-                <li><b>특징 3 :</b> 사전 학습되지 않은 정보는 미출력(할루시네이션 최소화)</li>
+                <li><b>특징 3 :</b> 질문 예시 '어묵김말이 재료 알려줘', '짜장면 재료 알려줘', '콩나물국 영양소 알려줘' 등</li>
+                <li><b>특징 4 :</b> 사전 학습되지 않은 정보는 미출력(할루시네이션 최소화)</li>
             </ol>
             </p>
             <div style="font-size:16px; font-weight:bold; margin-top:20px;">
             검색 Tips
             </div>
             <p style="font-size:14px;">
-            레시피, 조리법 등은 제공하지 않지만, 향후 전문 데이터 추가 학습 가능<br>
-            AI 분석으로 결과 도출까지 다소 시간이 걸릴 수 있음<b>AND</b>.
+            하드웨어 스펙 문제로 데이터가 제안적으로 학습됐으며 속도도 다소 느립니다.
+            향후 추가 비용을 들여 하드웨어 스펙 및 데이터 확장 가능<br>
+            AI 분석으로 결과 도출까지 다소 시간이 걸릴 수 있음
             </p>
             """, unsafe_allow_html=True)
     st.markdown(horizontal_bar, True)
@@ -489,12 +491,14 @@ elif selected_menu == "음식 AI챗봇":
         st.session_state.processComplete = None
         local_file_paths = ['메뉴4_데이터.pdf']  # 챗봇 사전 학습 데이터
         openai_api_key =  st.secrets["OPENAI_API_KEY"] # 개인 API 번호
-        files_text = menu4.get_text(local_file_paths)
-        text_chunks = menu4.get_text_chunks(files_text)
-        vetorestore = menu4.get_vectorstore(text_chunks)
-        st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
-        st.session_state.processComplete = True
 
+        with st.spinner("AI 전문 데이터 셋팅 중... 잠시만 기다려주세요."):
+            files_text = menu4.get_text(local_file_paths)
+            text_chunks = menu4.get_text_chunks(files_text)
+            vetorestore = menu4.get_vectorstore(text_chunks)
+            st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
+            st.session_state.processComplete = True
+            
     if 'messages' not in st.session_state:
         st.session_state['messages'] = [{"role": "assistant",
                                         "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
