@@ -27,14 +27,14 @@ def tiktoken_len(text):
     tokens = tokenizer.encode(text)
     return len(tokens)
 
-@st.cache_data
+@st.cache
 def get_text(file_paths):
     doc_list = []
     for file_path in file_paths:
         if file_path.endswith('.pdf'):
             loader = PyPDFLoader(file_path)
             documents = loader.load_and_split()
-        doc_list.extend(documents)
+            doc_list.extend(documents)
     return doc_list
 
 def get_text_chunks(text):
@@ -46,7 +46,7 @@ def get_text_chunks(text):
     chunks = text_splitter.split_documents(text)
     return chunks
 
-@st.cache_data
+@st.cache(allow_output_mutation=True)
 def get_vectorstore(text_chunks):
     embeddings = HuggingFaceEmbeddings(
         model_name="jhgan/ko-sroberta-multitask",
