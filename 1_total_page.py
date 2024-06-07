@@ -457,7 +457,7 @@ elif selected_menu == "AI 식단 작성":
 
 elif selected_menu == "음식 AI챗봇":
     import menu4
-    import pickle
+
 
     st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🧑‍💻 재료 및 영양소 전문 AI챗봇</h1>", unsafe_allow_html=True)
     with st.expander("**📖 (필독) 지능형 AI챗봇 사용법(예시질문 포함)**"):
@@ -484,60 +484,60 @@ elif selected_menu == "음식 AI챗봇":
             """, unsafe_allow_html=True)
     st.markdown(horizontal_bar, True)
 
-    if "conversation" not in st.session_state:
-        st.session_state.conversation = None
+    # if "conversation" not in st.session_state:
+    #     st.session_state.conversation = None
 
-    if "processComplete" not in st.session_state:
-        st.session_state.processComplete = None
-        local_file_paths = ['메뉴4_데이터.pdf']  # 챗봇 사전 학습 데이터
-        openai_api_key =  st.secrets["OPENAI_API_KEY"] # 개인 API 번호
+    # if "processComplete" not in st.session_state:
+    #     st.session_state.processComplete = None
+    #     local_file_paths = ['메뉴4_데이터.pdf']  # 챗봇 사전 학습 데이터
+    #     openai_api_key =  st.secrets["OPENAI_API_KEY"] # 개인 API 번호
 
-        with st.spinner("AI 전문 데이터 셋팅 중... 잠시만 기다려주세요."):
-            files_text = menu4.get_text(local_file_paths)
-            text_chunks = menu4.get_text_chunks(files_text)
-            vetorestore = menu4.get_vectorstore(text_chunks)
-            st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
-            st.session_state.processComplete = True
+    #     with st.spinner("AI 전문 데이터 셋팅 중... 잠시만 기다려주세요."):
+    #         files_text = menu4.get_text(local_file_paths)
+    #         text_chunks = menu4.get_text_chunks(files_text)
+    #         vetorestore = menu4.get_vectorstore(text_chunks)
+    #         st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
+    #         st.session_state.processComplete = True
             
-    if 'messages' not in st.session_state:
-        st.session_state['messages'] = [{"role": "✅",
-                                        "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
+    # if 'messages' not in st.session_state:
+    #     st.session_state['messages'] = [{"role": "✅",
+    #                                     "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
         
 
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-          st.markdown(message["content"])
+    # for message in st.session_state.messages:
+    #     with st.chat_message(message["role"]):
+    #       st.markdown(message["content"])
 
-    # # 메시지를 표시하는 함수
-    # def display_messages():
-    #     for message in st.session_state.messages:
-    #         role = message["role"]
-    #         content = message["content"]
-    #         if role == "assistant":
-    #             st.markdown(f"**Assistant:** {content}")
-    #         else:
-    #             st.markdown(f"**You:** {content}")
+    # # # 메시지를 표시하는 함수
+    # # def display_messages():
+    # #     for message in st.session_state.messages:
+    # #         role = message["role"]
+    # #         content = message["content"]
+    # #         if role == "assistant":
+    # #             st.markdown(f"**Assistant:** {content}")
+    # #         else:
+    # #             st.markdown(f"**You:** {content}")
 
-    # display_messages()
+    # # display_messages()
 
 
-    # Chat logic
-    if query := st.chat_input("질문을 입력해주세요."):
-        st.session_state.messages.append({"role": "user", "content": query})
+    # # Chat logic
+    # if query := st.chat_input("질문을 입력해주세요."):
+    #     st.session_state.messages.append({"role": "user", "content": query})
 
-        with st.chat_message("user"):
-            st.markdown(query)
+    #     with st.chat_message("user"):
+    #         st.markdown(query)
 
-        with st.chat_message("assistant"):
-            chain = st.session_state.conversation
+    #     with st.chat_message("assistant"):
+    #         chain = st.session_state.conversation
 
-            with st.spinner("잠시만 기다려주세요..."):
-                result = chain({"question": query})
-                response = result['answer']
-                st.markdown(response)
+    #         with st.spinner("잠시만 기다려주세요..."):
+    #             result = chain({"question": query})
+    #             response = result['answer']
+    #             st.markdown(response)
 
-        # Add assistant message to chat history
-        st.session_state.messages.append({"role": "assistant", "content": response})
+    #     # Add assistant message to chat history
+    #     st.session_state.messages.append({"role": "assistant", "content": response})
 
 
     # # Chat logic
@@ -557,59 +557,58 @@ elif selected_menu == "음식 AI챗봇":
 
 #-------------------
 
-        # if "conversation" not in st.session_state:
-        #     st.session_state.conversation = None
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
 
-        # if "chat_history" not in st.session_state:
-        #     st.session_state.chat_history = None
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
 
-        # if "processComplete" not in st.session_state:
-        #     st.session_state.processComplete = None
-        #     local_file_paths = ['영양DB.pdf','음식재료.pdf'] #챗봇 사전 학습 데이터
-        #     openai_api_key = st.secrets["OPENAI_API_KEY"] # 개인 API 번호
+    if "processComplete" not in st.session_state:
+        st.session_state.processComplete = None
+        local_file_paths = ['메뉴4_데이터.pdf'] #챗봇 사전 학습 데이터
+        openai_api_key = st.secrets["OPENAI_API_KEY"] # 개인 API 번호
 
-        #     files_text = menu4.get_text(local_file_paths)
-        #     text_chunks = menu4.get_text_chunks(files_text)
-        #     vetorestore = menu4.get_vectorstore(text_chunks)
+        with st.spinner("AI 전문 데이터 셋팅 중... 잠시만 기다려주세요."):
+            files_text = menu4.get_text(local_file_paths)
+            text_chunks = menu4.get_text_chunks(files_text)
+            vetorestore = menu4.get_vectorstore(text_chunks)
+            st.session_state.conversation = menu4.get_conversation_chain(vetorestore, openai_api_key)
+            st.session_state.processComplete = True
 
-        #     st.session_state.conversation = menu4.get_conversation_chain(vetorestore,openai_api_key)
+    if 'messages' not in st.session_state:
+        st.session_state['messages'] = [{"role": "assistant",
+                                    "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
 
-        #     st.session_state.processComplete = True
+    for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
-        # if 'messages' not in st.session_state:
-        #     st.session_state['messages'] = [{"role": "assistant",
-        #                                 "content": "안녕하세요!  AI 영양사에요. 궁금한것을 물어봐 주세요!"}]
+    
+    # history = StreamlitChatMessageHistory(key="chat_messages")
 
-        # for message in st.session_state.messages:
-        #         with st.chat_message(message["role"]):
-        #             st.markdown(message["content"])
+    # Chat logic
+    if query := st.chat_input("질문(재료 및 영양소)을 입력해주세요."):
+        st.session_state.messages.append({"role": "user", "content": query})
 
-        
-        # # history = StreamlitChatMessageHistory(key="chat_messages")
+        with st.chat_message("user"):
+                st.markdown(query)
 
-        # # Chat logic
-        # if query := st.chat_input("질문(재료 및 영양소)을 입력해주세요."):
-        #     st.session_state.messages.append({"role": "user", "content": query})
+        with st.chat_message("assistant"):
+                chain = st.session_state.conversation
 
-        #     with st.chat_message("user"):
-        #             st.markdown(query)
+                with st.spinner("잠시만 기다려주세요..."):
+                    result = chain({"question": query})
+                    # with get_openai_callback() as cb:
+                    #     st.session_state.chat_history = result['chat_history']
+                    response = result['answer']
+                    #빅source_documents = result['source_documents']
 
-        #     with st.chat_message("assistant"):
-        #             chain = st.session_state.conversation
+                    st.markdown(response)
+                    # with st.expander("출처확인"):
+                    #     st.markdown(source_documents[0].metadata['source'], help = source_documents[0].page_content)
 
-        #             with st.spinner("잠시만 기다려주세요..."):
-        #                 result = chain({"question": query})
-        #                 # with get_openai_callback() as cb:
-        #                 #     st.session_state.chat_history = result['chat_history']
-        #                 response = result['answer']
-        #                 #빅source_documents = result['source_documents']
-
-        #                 st.markdown(response)
-        #                 # with st.expander("출처확인"):
-        #                 #     st.markdown(source_documents[0].metadata['source'], help = source_documents[0].page_content)
-
-        #     # Add assistant message to chat history
-        #     st.session_state.messages.append({"role": "assistant", "content": response})
+        # Add assistant message to chat history
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 
