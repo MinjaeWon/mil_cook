@@ -562,7 +562,7 @@ elif selected_menu == "음식 AI챗봇":
 
     if "processComplete" not in st.session_state:
         st.session_state.processComplete = None
-        local_file_paths = ['2024_학교폭력_처리가이드.pdf']  # 챗봇 사전 학습 데이터
+        local_file_paths = ['메뉴4_데이터.pdf']  # 챗봇 사전 학습 데이터
         openai_api_key = ""  # 개인 API 번호
 
         with st.spinner("PDF 임베딩 중... 잠시만 기다려주세요."):
