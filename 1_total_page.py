@@ -516,19 +516,16 @@ elif selected_menu == "음식 AI챗봇":
     display_messages()
 
     # Chat logic
-    if query := st.chat_input("음식 질문(재료 및 영양소)을 입력해주세요."):
+    if query := st.text_input("질문을 입력해주세요."):
         st.session_state.messages.append({"role": "user", "content": query})
 
-        with st.chat_message("user"):
-            st.markdown(query)
+        st.markdown(f"**You:** {query}")
 
-        with st.chat_message("assistant"):
+        with st.spinner("잠시만 기다려주세요..."):
             chain = st.session_state.conversation
-
-            with st.spinner("AI 분석 중, 잠시만 기다려주세요..."):
-                result = chain({"question": query})
-                response = result['answer']
-                st.markdown(response)
+            result = chain({"question": query})
+            response = result['answer']
+            st.markdown(f"**Assistant:** {response}")
 
         # Add assistant message to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
