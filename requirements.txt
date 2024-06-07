@@ -15,3 +15,4 @@ pypdf
 hydralit_components
 openpyxl
 faiss-cpu
+streamlit-chat
