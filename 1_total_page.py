@@ -641,7 +641,7 @@ elif selected_menu == "급식포털":
         with col1:
             st.markdown("<h1 style='color: #7F462C; font-size: 30px;'>🌄 군급식 홍보 AI 이미지 만들기</h1>", unsafe_allow_html=True)
             prompt = st.text_area("만들고 싶은 이미지에 대한 설명Prompt)을 자세히 작성해주세요")
-            size = "512x512"
+            size = "1024x1024"
             # size = st.selectbox("이미지 크기 선택:", options=["256x256", "512x512", "1024x1024", "2048x2048"])
             text_to_add = st.text_input("이미지 위에 넣고 싶은 표어(문구)를 작성해주세요(선택사항)")
             font_size = st.slider("표어(문구) 크기 설정", min_value=20, max_value=100, value=60)
