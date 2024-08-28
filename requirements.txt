@@ -17,3 +17,4 @@ webdriver-manager
 folium
 streamlit-folium
 opencv-python
+opencv-python-headless
