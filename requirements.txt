@@ -18,3 +18,4 @@ folium
 streamlit-folium
 opencv-python
 opencv-python-headless
+pdfplumber
