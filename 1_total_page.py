@@ -239,6 +239,28 @@ elif selected_menu == "AI 미술심리 진단검사":
 
         # 이미지 파일이 업로드되었는지 확인합니다.
         if uploaded_file is not None:
+            # 이미지를 열고 저장
+            img = Image.open(uploaded_file)
+            
+            # RGBA 또는 P 모드의 이미지는 JPEG로 변환할 수 없으므로 변환
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 임시 파일로 이미지를 저장
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
+                img.save(temp_file, format="JPEG")
+                temp_file_path = temp_file.name  # 임시 파일 경로
+            
+            st.write(f"이미지 파일이 임시 경로에 저장되었습니다: {temp_file_path}")
+            
+            # YOLO 모델로 이미지 처리 (경로 전달)
+            try:
+                with st.spinner('분석 중...'):
+                    menu2_ai_picture.process_house(temp_file_path)
+            except FileNotFoundError:
+                st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
+
+
             st.sidebar.write("⏬ 파일 업로드, 분석시작 버튼 클릭⏬")
         else:
             st.sidebar.write("<span style='font-family: Arial, sans-serif; font-size: 14px; color: #888;'>🧑🏻‍💻 파일이 업로드되지 않았습니다.</span>", unsafe_allow_html=True)
