@@ -1,5 +1,5 @@
 import streamlit as st
-
+import tempfile
 from PIL import Image
 from streamlit_option_menu import option_menu
 
@@ -244,15 +244,25 @@ elif selected_menu == "AI 미술심리 진단검사":
             st.sidebar.write("<span style='font-family: Arial, sans-serif; font-size: 14px; color: #888;'>🧑🏻‍💻 파일이 업로드되지 않았습니다.</span>", unsafe_allow_html=True)
 
         # 분석 버튼을 생성합니다.
+        # if st.sidebar.button("🏠 집 그림 분석 시작"):
+        #     # 업로드된 이미지 파일을 열어서 처리합니다.
+        #     if uploaded_file is not None:
+        #         img = Image.open(uploaded_file)
+        #         # process_house 함수를 호출하여 이미지를 분석합니다.
+        #         with st.spinner('분석 중... 잠시만 기다려 주세요'):
+        #             menu2_ai_picture.process_house(img)
+        #     else:
+        #         st.sidebar.write("이미지 파일을 업로드해해주세요.")
         if st.sidebar.button("🏠 집 그림 분석 시작"):
-            # 업로드된 이미지 파일을 열어서 처리합니다.
             if uploaded_file is not None:
                 img = Image.open(uploaded_file)
-                # process_house 함수를 호출하여 이미지를 분석합니다.
+                with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                    img.save(temp_file, format="JPEG")
+                    temp_file_path = temp_file.name
                 with st.spinner('분석 중... 잠시만 기다려 주세요'):
-                    menu2_ai_picture.process_house(img)
+                    menu2_ai_picture.process_house(temp_file_path)
             else:
-                st.sidebar.write("이미지 파일을 업로드해해주세요.")
+                st.sidebar.write("이미지 파일을 업로드해 주세요.")
 
 
     elif chosen_tab == RESOURCE: #나무그림
