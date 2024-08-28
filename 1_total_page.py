@@ -38,7 +38,6 @@ def InitialPage():
         <ul>
             <li style="font-size:19px"> 고용부 및 산하기관 공공데이터 활용 상담센터 연계 구현</li>
             <li style="font-size:19px">상담센터 정보 및 위치를 구글 MAP에 표기하여 편의성 제공</li>
-            <li style="font-size:19px">선택한 상담센터 네이버 블로그 후기 실시간 검색 및 출력</li>
         </ul>
     </li>
     </ol></span>"""
