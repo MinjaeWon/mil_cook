@@ -251,17 +251,17 @@ elif selected_menu == "AI 미술심리 진단검사":
                 img.save(temp_file, format="JPEG")
                 temp_file_path = temp_file.name  # 임시 파일 경로
             
-            #st.write(f"이미지 파일이 임시 경로에 저장되었습니다: {temp_file_path}")
-            
-            # YOLO 모델로 이미지 처리 (경로 전달)
-            # try:
-            #     with st.spinner('분석 중...'):
-            #         menu2_ai_picture.process_house(temp_file_path)
-            # except FileNotFoundError:
-            #     st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
+            # 이미지 미리보기 (선택 사항)
+            st.image(img, caption="업로드한 이미지", use_column_width=True)
 
-
-            st.sidebar.write("⏬ 파일 업로드, 분석시작 버튼 클릭⏬")
+            # 분석 시작 버튼 클릭 시 YOLO 모델 실행
+            if st.sidebar.button("분석 시작"):
+                try:
+                    with st.spinner('분석 중... 잠시만 기다려 주세요'):
+                        menu2_ai_picture.process_house(temp_file_path)  # YOLO 모델 실행
+                    st.success("분석이 완료되었습니다.")
+                except FileNotFoundError:
+                    st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
         else:
             st.sidebar.write("<span style='font-family: Arial, sans-serif; font-size: 14px; color: #888;'>🧑🏻‍💻 파일이 업로드되지 않았습니다.</span>", unsafe_allow_html=True)
 
@@ -275,17 +275,7 @@ elif selected_menu == "AI 미술심리 진단검사":
         #             menu2_ai_picture.process_house(img)
         #     else:
         #         st.sidebar.write("이미지 파일을 업로드해해주세요.")
-        if st.sidebar.button("🏠 집 그림 분석 시작"):
-            if uploaded_file is not None:
-                img = Image.open(uploaded_file)
-                with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-                    #img.save(temp_file, format="JPEG")
-                    img.save(temp_file, format="JPEG")
-                    temp_file_path = temp_file.name
-                with st.spinner('분석 중... 잠시만 기다려 주세요'):
-                    menu2_ai_picture.process_house(temp_file_path)
-            else:
-                st.sidebar.write("이미지 파일을 업로드해 주세요.")
+
 
 
     elif chosen_tab == RESOURCE: #나무그림
