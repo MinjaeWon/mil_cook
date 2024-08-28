@@ -251,14 +251,14 @@ elif selected_menu == "AI 미술심리 진단검사":
                 img.save(temp_file, format="JPEG")
                 temp_file_path = temp_file.name  # 임시 파일 경로
             
-            st.write(f"이미지 파일이 임시 경로에 저장되었습니다: {temp_file_path}")
+            #st.write(f"이미지 파일이 임시 경로에 저장되었습니다: {temp_file_path}")
             
             # YOLO 모델로 이미지 처리 (경로 전달)
-            try:
-                with st.spinner('분석 중...'):
-                    menu2_ai_picture.process_house(temp_file_path)
-            except FileNotFoundError:
-                st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
+            # try:
+            #     with st.spinner('분석 중...'):
+            #         menu2_ai_picture.process_house(temp_file_path)
+            # except FileNotFoundError:
+            #     st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
 
 
             st.sidebar.write("⏬ 파일 업로드, 분석시작 버튼 클릭⏬")
