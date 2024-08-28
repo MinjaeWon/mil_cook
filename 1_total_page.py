@@ -289,20 +289,32 @@ elif selected_menu == "AI 미술심리 진단검사":
 
         # 이미지 파일이 업로드되었는지 확인합니다.
         if uploaded_file is not None:
-            st.sidebar.write("⏬ 파일 업로드, 분석시작 버튼 클릭⏬")
+            # 이미지를 열고 저장
+            img = Image.open(uploaded_file)
+            
+            # RGBA 또는 P 모드의 이미지는 JPEG로 변환할 수 없으므로 변환
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 임시 파일로 이미지를 저장
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
+                img.save(temp_file, format="JPEG")
+                temp_file_path = temp_file.name  # 임시 파일 경로
+            
+            # 이미지 미리보기 (선택 사항)
+            st.image(img, caption="업로드한 이미지", use_column_width=True)
+
+            # 분석 시작 버튼 클릭 시 YOLO 모델 실행
+            if st.sidebar.button("분석 시작"):
+                try:
+                    with st.spinner('분석 중... 잠시만 기다려 주세요'):
+                        menu2_ai_picture.process_house(temp_file_path)  # YOLO 모델 실행
+                    st.success("분석이 완료되었습니다.")
+                except FileNotFoundError:
+                    st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
         else:
             st.sidebar.write("<span style='font-family: Arial, sans-serif; font-size: 14px; color: #888;'>🧑🏻‍💻 파일이 업로드되지 않았습니다.</span>", unsafe_allow_html=True)
 
-        # 분석 버튼을 생성합니다.
-        if st.sidebar.button("🌳 나무 그림 분석 시작"):
-            # 업로드된 이미지 파일을 열어서 처리합니다.
-            if uploaded_file is not None:
-                img = Image.open(uploaded_file)
-                # process_house 함수를 호출하여 이미지를 분석합니다.
-                with st.spinner('분석 중... 잠시만 기다려 주세요'):
-                    menu2_ai_picture.process_tree(img)
-            else:
-                st.sidebar.write("이미지 파일을 업로드해주세요.")
 
     elif chosen_tab == CONTACT: #사람그림
         st.markdown(horizontal_bar, True)
@@ -315,20 +327,31 @@ elif selected_menu == "AI 미술심리 진단검사":
 
         # 이미지 파일이 업로드되었는지 확인합니다.
         if uploaded_file is not None:
-            st.sidebar.write("⏬ 파일 업로드, 분석시작 버튼 클릭⏬")
+            # 이미지를 열고 저장
+            img = Image.open(uploaded_file)
+            
+            # RGBA 또는 P 모드의 이미지는 JPEG로 변환할 수 없으므로 변환
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 임시 파일로 이미지를 저장
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
+                img.save(temp_file, format="JPEG")
+                temp_file_path = temp_file.name  # 임시 파일 경로
+            
+            # 이미지 미리보기 (선택 사항)
+            st.image(img, caption="업로드한 이미지", use_column_width=True)
+
+            # 분석 시작 버튼 클릭 시 YOLO 모델 실행
+            if st.sidebar.button("분석 시작"):
+                try:
+                    with st.spinner('분석 중... 잠시만 기다려 주세요'):
+                        menu2_ai_picture.process_house(temp_file_path)  # YOLO 모델 실행
+                    st.success("분석이 완료되었습니다.")
+                except FileNotFoundError:
+                    st.error("파일을 찾을 수 없습니다. 업로드된 이미지 경로를 확인하세요.")
         else:
             st.sidebar.write("<span style='font-family: Arial, sans-serif; font-size: 14px; color: #888;'>🧑🏻‍💻 파일이 업로드되지 않았습니다.</span>", unsafe_allow_html=True)
-
-        # 분석 버튼을 생성합니다.
-        if st.sidebar.button("👩‍🌾 사람 그림 분석 시작"):
-            # 업로드된 이미지 파일을 열어서 처리합니다.
-            if uploaded_file is not None:
-                img = Image.open(uploaded_file)
-                # process_house 함수를 호출하여 이미지를 분석합니다.
-                with st.spinner('분석 중... 잠시만 기다려 주세요'):
-                    menu2_ai_picture.process_person(img)
-            else:
-                st.sidebar.write("이미지 파일을 업로드해주세요.")
 
 
 
