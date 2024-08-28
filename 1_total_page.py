@@ -258,7 +258,7 @@ elif selected_menu == "AI 미술심리 진단검사":
                 img = Image.open(uploaded_file)
                 with tempfile.NamedTemporaryFile(delete=False) as temp_file:
                     #img.save(temp_file, format="JPEG")
-                    img.save(temp_file)
+                    img.save(temp_file, format="JPEG")
                     temp_file_path = temp_file.name
                 with st.spinner('분석 중... 잠시만 기다려 주세요'):
                     menu2_ai_picture.process_house(temp_file_path)
