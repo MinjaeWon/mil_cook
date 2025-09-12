@@ -115,11 +115,15 @@ with right:
         unsafe_allow_html=True
     )
 st.markdown("<hr/>", unsafe_allow_html=True)
-
+import inspect
 # -------------------- 사이드바(통합 필터) --------------------
 # ▼ 이 줄을 st.sidebar.header("사용자 요구사항") 보다 위에 넣으세요.
 with st.sidebar:
-    st.image("로고.png", use_column_width=True)  # ← 인자명 교체
+    # st.image가 use_container_width를 지원하는지 체크
+    if "use_container_width" in inspect.signature(st.image).parameters:
+        st.image("로고.png", use_container_width=True)
+    else:
+        st.image("로고.png", use_column_width=True)  # 구버전 호환
     st.markdown("<hr/>", unsafe_allow_html=True)
 
 st.sidebar.header("사용자 요구사항")
