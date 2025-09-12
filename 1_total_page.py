@@ -104,7 +104,7 @@ labs["등록연도"] = pd.to_numeric(labs["등록연도"], errors="coerce").asty
 left, right = st.columns([0.75, 0.25])
 with left:
     st.markdown("### 📊 특구 인사이트 정보제공")
-    st.caption("입주기업 & 연구소기업 **빠른 조회 + 간단 분석 3종**")
+    st.caption("입주기업 & 연구소기업 **빠른 조회 + 데이터 분석 3종**")
 with right:
     st.markdown(
         '<div style="text-align:right;">'
@@ -165,7 +165,7 @@ with m3:
 st.markdown("<hr/>", unsafe_allow_html=True)
 
 # -------------------- 탭 --------------------
-tab1, tab2, tab3 = st.tabs(["입주기업 조회", "연구소기업 조회", "간단 분석"])
+tab1, tab2, tab3 = st.tabs(["입주기업 조회", "연구소기업 조회", "데이터 심층분석"])
 
 # ===== 탭1: 입주기업 조회 =====
 with tab1:
