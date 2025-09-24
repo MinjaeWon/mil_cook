@@ -62,8 +62,8 @@ PATH_FIRMS = "(재)연구개발특구진흥재단_특구입주기업현황_20250
 PATH_LABS  = "(재)연구개발특구진흥재단_연구소기업 운영현황_20250731.csv"  # 구분,기업명,사업자등록번호,등록연도,현행특구,강소특구여부
 
 # ✅ 추가: 코스닥/시총 엑셀
-PATH_MCAP   = "시가총액목록.xlsx"      # 업로드된 엑셀 파일명
-PATH_KOSDAQ = "코스닥상장목록.xlsx"    # 업로드된 엑셀 파일명
+PATH_MCAP   = "시가총액목록.csv"      # 업로드된 엑셀 파일명
+PATH_KOSDAQ = "코스닥상장목록.csv"    # 업로드된 엑셀 파일명
 
 # -------------------- 유틸 --------------------
 def read_csv_kr(path):
@@ -168,28 +168,66 @@ def normalize_company_for_match(s: str) -> str:
     s = re.sub(r"[^0-9A-Z가-힣]", "", s)
     return s.strip()
 
-def read_excel_safe(paths_or_names):
-    """여러 경로 후보를 받아 첫 성공 파일을 반환. 실패 시 빈 DF."""
+def read_table_safe(paths_or_names):
+    """CSV/Excel 자동 감지 로더. 여러 경로 후보를 받아 첫 성공 DF 반환. 실패 시 빈 DF."""
+    import os
     if isinstance(paths_or_names, str):
         paths_or_names = [paths_or_names]
-    # /mnt/data 폴백도 함께 시도
-    alt_map = {PATH_MCAP: "/mnt/data/시가총액목록.xlsx", PATH_KOSDAQ: "/mnt/data/코스닥상장목록.xlsx"}
-    tried = []
+
+    # 후보 경로 확장: /mnt/data 및 xlsx/csv 교차 시도
+    expanded = []
     for p in paths_or_names:
-        tried.append(p)
+        expanded.append(p)
+        # /mnt/data 폴백
+        base = os.path.basename(p)
+        expanded.append(os.path.join("/mnt/data", base))
+        # 확장자 교차 시도
+        if base.lower().endswith(".csv"):
+            expanded.append(p[:-4] + ".xlsx")
+            expanded.append(os.path.join("/mnt/data", base[:-4] + ".xlsx"))
+        if base.lower().endswith((".xlsx", ".xls")):
+            expanded.append(os.path.splitext(p)[0] + ".csv")
+            expanded.append(os.path.join("/mnt/data", os.path.splitext(base)[0] + ".csv"))
+
+    tried = set()
+    for path in expanded:
+        if path in tried:
+            continue
+        tried.add(path)
         try:
-            return pd.read_excel(p)
-        except Exception:
-            # 폴백 경로 시도
-            if p in alt_map:
-                alt_p = alt_map[p]
-                tried.append(alt_p)
+            lower = path.lower()
+            if lower.endswith(".csv"):
+                # 인코딩 여러 번 시도
+                for enc in ["utf-8-sig", "cp949", "utf-8"]:
+                    try:
+                        return pd.read_csv(path, encoding=enc)
+                    except Exception:
+                        continue
+                # 마지막 시도: 구분자 자동 추정
                 try:
-                    return pd.read_excel(alt_p)
+                    return pd.read_csv(path, encoding="utf-8", engine="python", sep=None)
                 except Exception:
                     pass
+            elif lower.endswith((".xlsx", ".xls")):
+                try:
+                    return pd.read_excel(path)
+                except Exception:
+                    pass
+            else:
+                # 확장자 불명: csv 먼저, 안되면 excel
+                for enc in ["utf-8-sig", "cp949", "utf-8"]:
+                    try:
+                        return pd.read_csv(path, encoding=enc)
+                    except Exception:
+                        continue
+                try:
+                    return pd.read_excel(path)
+                except Exception:
+                    pass
+        except Exception:
             continue
     return pd.DataFrame()
+
 
 def pick_col(df, candidates):
     for c in candidates:
@@ -205,8 +243,8 @@ labs  = read_csv_kr(PATH_LABS)   # 구분, 기업명, 사업자등록번호, 등
 
 #추가
 # -------------------- 코스닥 기준표 구성 --------------------
-mcap_raw   = read_excel_safe(PATH_MCAP)
-kosdaq_raw = read_excel_safe(PATH_KOSDAQ)
+mcap_raw   = read_table_safe([PATH_MCAP])
+kosdaq_raw = read_table_safe([PATH_KOSDAQ])
 
 if mcap_raw.empty or kosdaq_raw.empty:
     # 빈 DF여도 뒤에서 쓰는 컬럼(시총_원 포함)을 모두 갖춘 틀을 만든다
